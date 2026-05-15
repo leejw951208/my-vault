@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model RecurringExpense {
+  id            String   @id @default(cuid())
+  name          String
+  category      String
+  amount        Int
+  currency      String   @default("KRW")
+  recurrence    String
+  dayOfMonth    Int?
+  dayOfWeek     Int?
+  monthOfYear   Int?
+  startDate     DateTime
+  endDate       DateTime?
+  paymentMethod String?
+  memo          String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  occurrences   ExpenseOccurrence[]
+}
+
+model ExpenseOccurrence {
+  id             String   @id @default(cuid())
+  expenseId      String
+  expense        RecurringExpense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  dueDate        DateTime
+  expectedAmount Int
+  actualAmount   Int?
+  status         String   @default("SCHEDULED")
+  paidAt         DateTime?
+  memo           String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([dueDate])
+  @@index([expenseId])
+  @@index([status])
+}
