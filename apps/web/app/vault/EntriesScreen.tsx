@@ -123,11 +123,7 @@ export function EntriesScreen() {
                 <Link className="btn secondary" href="/vault/backup">
                     백업·복원
                 </Link>
-                <Link
-                    className="btn"
-                    href="/vault/new"
-                    style={{ marginLeft: "auto" }}
-                >
+                <Link className="btn push-end" href="/vault/new">
                     + 항목 추가
                 </Link>
             </nav>

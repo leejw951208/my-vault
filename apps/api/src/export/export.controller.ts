@@ -63,7 +63,7 @@ export class ExportController {
             "Content-Disposition",
             `attachment; filename="${filename}"`,
         )
-        res.write(`﻿${HEADERS.join(",")}`)
+        res.write(`\uFEFF${HEADERS.join(",")}`)
 
         for (const occ of occurrences) {
             const basis = occ.actualAmount === null ? "예상" : "실제"

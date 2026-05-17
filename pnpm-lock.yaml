@@ -7,9 +7,18 @@ settings:
 importers:
     .:
         devDependencies:
+            "@eslint/js":
+                specifier: ^10.0.1
+                version: 10.0.1(eslint@9.39.4(jiti@2.7.0))
+            globals:
+                specifier: ^17.6.0
+                version: 17.6.0
             prettier:
                 specifier: ^3.8.3
                 version: 3.8.3
+            typescript-eslint:
+                specifier: ^8.59.3
+                version: 8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
 
     apps/api:
         dependencies:
@@ -616,6 +625,18 @@ packages:
                 integrity: sha512-4IlJx0X0qftVsN5E+/vGujTRIFtwuLbNsVUe7TO6zYPDR1O6nFwvwhIKEKSrl6dZchmYBITazxKoUYOjdtjlRg==,
             }
         engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+
+    "@eslint/js@10.0.1":
+        resolution:
+            {
+                integrity: sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA==,
+            }
+        engines: { node: ^20.19.0 || ^22.13.0 || >=24 }
+        peerDependencies:
+            eslint: ^10.0.0
+        peerDependenciesMeta:
+            eslint:
+                optional: true
 
     "@eslint/js@9.39.4":
         resolution:
@@ -4335,6 +4356,13 @@ packages:
             }
         engines: { node: ">=18" }
 
+    globals@17.6.0:
+        resolution:
+            {
+                integrity: sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA==,
+            }
+        engines: { node: ">=18" }
+
     globalthis@1.0.4:
         resolution:
             {
@@ -7289,6 +7317,16 @@ packages:
                 integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==,
             }
 
+    typescript-eslint@8.59.3:
+        resolution:
+            {
+                integrity: sha512-KgusgyDgG4LI8Ih/sWaCtZ06tckLAS5CvT5A4D1Q7bYVoAAyzwiZvE4BmwDHkhRVkvhRBepKeASoFzQetha7Fg==,
+            }
+        engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+        peerDependencies:
+            eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
+            typescript: ">=4.8.4 <6.1.0"
+
     typescript@5.7.2:
         resolution:
             {
@@ -8000,6 +8038,10 @@ snapshots:
             strip-json-comments: 3.1.1
         transitivePeerDependencies:
             - supports-color
+
+    "@eslint/js@10.0.1(eslint@9.39.4(jiti@2.7.0))":
+        optionalDependencies:
+            eslint: 9.39.4(jiti@2.7.0)
 
     "@eslint/js@9.39.4": {}
 
@@ -10531,6 +10573,8 @@ snapshots:
 
     globals@14.0.0: {}
 
+    globals@17.6.0: {}
+
     globalthis@1.0.4:
         dependencies:
             define-properties: 1.2.1
@@ -12519,6 +12563,17 @@ snapshots:
             reflect.getprototypeof: 1.0.10
 
     typedarray@0.0.6: {}
+
+    typescript-eslint@8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3):
+        dependencies:
+            "@typescript-eslint/eslint-plugin": 8.59.3(@typescript-eslint/parser@8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
+            "@typescript-eslint/parser": 8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
+            "@typescript-eslint/typescript-estree": 8.59.3(typescript@5.9.3)
+            "@typescript-eslint/utils": 8.59.3(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
+            eslint: 9.39.4(jiti@2.7.0)
+            typescript: 5.9.3
+        transitivePeerDependencies:
+            - supports-color
 
     typescript@5.7.2: {}
 
