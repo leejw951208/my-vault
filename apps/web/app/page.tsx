@@ -1,7 +1,7 @@
 // 대시보드. 이번 달 합계, 다음 7일 예정, 이번 달 미완료 수를 카드로 보여준다.
 import Link from 'next/link';
 import { getExpenses, getOccurrences } from '@/lib/api-client';
-import { formatCurrency, formatDate, todayIso, addDaysIso } from '@/lib/format';
+import { formatCurrency, formatDateShort, todayIso, addDaysIso } from '@/lib/format';
 import { ResponsiveTable, type ResponsiveColumn } from '@/components/ResponsiveTable';
 
 export const dynamic = 'force-dynamic';
@@ -17,7 +17,7 @@ function monthRange(today: string): { from: string; to: string } {
 type Occurrence = Awaited<ReturnType<typeof getOccurrences>>[number];
 
 const UPCOMING_COLUMNS: ResponsiveColumn<Occurrence>[] = [
-  { key: 'date', header: '날짜', render: (o) => formatDate(o.dueDate) },
+  { key: 'date', header: '날짜', render: (o) => formatDateShort(o.dueDate) },
   { key: 'name', header: '이름', render: (o) => o.expense.name, primary: true },
   { key: 'category', header: '카테고리', render: (o) => o.expense.category },
   {
@@ -64,17 +64,16 @@ export default async function DashboardPage() {
         <div className="card">
           <div className="muted">이번 달 예상 합계</div>
           <div className="amount large">{formatCurrency(monthlyTotal)}</div>
-          <div className="muted">{monthFrom} ~ {monthTo}</div>
+          <div className="muted dashboard-date-range">{formatDateShort(monthFrom)} ~ {formatDateShort(monthTo)}</div>
         </div>
         <div className="card">
           <div className="muted">다음 7일 예정</div>
           <div className="amount large">{upcoming.length}건</div>
-          <div className="muted">{today} ~ {next7}</div>
+          <div className="muted dashboard-date-range">{formatDateShort(today)} ~ {formatDateShort(next7)}</div>
         </div>
         <div className="card">
           <div className="muted">이번 달 미완료</div>
           <div className="amount large">{unpaidCount}건</div>
-          <div className="muted">SCHEDULED 상태</div>
         </div>
         <div className="card">
           <div className="muted">등록된 정기 지출</div>

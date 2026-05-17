@@ -14,6 +14,13 @@ export function formatDate(value: string | Date): string {
   return `${y}-${m}-${d}`;
 }
 
+export function formatDateShort(value: string | Date): string {
+  const date = typeof value === 'string' ? new Date(value) : value;
+  const m = date.getUTCMonth() + 1;
+  const d = date.getUTCDate();
+  return `${m}월 ${d}일`;
+}
+
 export function todayIso(): string {
   return formatDate(new Date());
 }

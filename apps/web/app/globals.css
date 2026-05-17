@@ -188,10 +188,14 @@ a:hover {
 }
 
 .grid.cards {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .muted { color: var(--color-text-muted); }
+.dashboard-date-range {
+  font-size: var(--font-sm);
+  white-space: nowrap;
+}
 .amount { font-variant-numeric: tabular-nums; font-weight: 600; }
 .amount.large { font-size: var(--font-xl); }
 
