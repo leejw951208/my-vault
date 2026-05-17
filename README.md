@@ -71,7 +71,7 @@ pnpm --filter @life-key/web run test:visual                    # 회귀 검증
 
 ```
 /                              대시보드 (조회 전용)
-/expenses                      정기 지출 목록 + URL 기반 필터(status, category)
+/expenses                      정기 지출 목록 + URL 기반 필터(status=active|inactive|all, category)
 /expenses/new                  정기 지출 신규 폼
 /expenses/[id]                 정기 지출 상세 4섹션 + view↔edit + 삭제
 /calendar                      AgendaView (조회 전용)

@@ -45,7 +45,7 @@
 
 - `/vault` 는 entries 목록 전용. 잠금 해제 전이면 `<UnlockScreen />`, 해제 후이면 entries 목록 + 필터/검색 URL state.
 - `/vault/new` 는 신규 항목 추가 폼. `/vault/[id]` 는 detail + reveal + 수정 + 삭제.
-- `/vault/categories` 는 카테고리 메타 관리 라우트(현재 vault 안 인라인이던 흐름을 분리).
+- `/vault/categories` 는 카테고리 메타 관리 라우트(현재 vault 안 인라인이던 흐름을 분리). 본 회차 구현은 read-only reference view 로 제한한다. 사유. 카테고리 정의가 코드 상수(`CATEGORY_LABELS`, `CATEGORY_FIELDS`) 이고 본 spec 의 "API/Crypto 변경 금지" 제약상 사용자 CRUD UI 는 백엔드 endpoint 추가 회차로 이관.
 - `/vault/backup` 은 export/import 패널 (`BackupPanel` 이전).
 - `apps/web/app/vault/layout.tsx` 는 잠금 상태와 idle timer 를 segment layout 으로 공유. 모든 vault 서브라우트에서 잠금 해제 후 access. 잠금 시 layout 이 `<UnlockScreen />` 으로 fallback.
 

@@ -24,6 +24,8 @@ export default function VaultLayout({ children }: { children: React.ReactNode })
   }, [refresh]);
 
   // unlocked 상태일 때 1초 간격으로 idle 카운트다운을 갱신한다.
+  // 첫 tick 까지의 1초 지연은 의도된 것이다. server 의 idleSecondsRemaining 은 fetch 시점 기준이므로
+  // mount 직후 1초 동안 같은 값을 표시하는 게 실제 경과 시간과 일치한다.
   useEffect(() => {
     if (status?.state !== 'unlocked') return;
     const id = setInterval(() => {
