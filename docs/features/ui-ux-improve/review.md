@@ -2,12 +2,12 @@
 
 ## 리뷰 개요
 
-- 일자: 2026-05-17 (재검증 6회차)
+- 일자: 2026-05-17 (재검증 7회차, patch 보강 후)
 - Spec: docs/features/ui-ux-improve/spec.md
 - Plan: docs/features/ui-ux-improve/plan.md
 - 브랜치. main
-- 자동 검증. `pnpm --filter @life-key/web typecheck` 통과, `pnpm --filter @life-key/web test` 32/32 통과, `pnpm --filter @life-key/web build` 통과, `pnpm --filter @life-key/web run test:visual` 69/69 통과.
-- 검증 메모. `test:visual`은 빌드 전 병렬 실행 1회가 `.next` 부재로 실패했고, `next build` 완료 후 재실행해 69/69 통과를 확인했다.
+- 자동 검증. `pnpm --filter @life-key/web typecheck` 통과, `pnpm --filter @life-key/web test` 36/36 통과(node 6 + jsdom 2), `pnpm --filter @life-key/web build` 통과(12개 app route, 최대 First Load JS 133 kB). `pnpm --filter @life-key/web run test:visual`는 직전 6회차 69/69 통과 결과를 재사용한다(이번 patch는 UI 변경 없음).
+- 변경 메모. jest 멀티 프로젝트(node + jsdom)로 재구성. devDeps에 `jest-environment-jsdom@^29`, `@testing-library/react`, `@testing-library/dom` 추가. 신규 테스트 2건 추가로 S3/S7 UNTESTED → TESTED.
 
 ---
 
@@ -73,9 +73,9 @@
 |----------|--------|------|----------|--------|-----------|
 | CLOSED | — | TESTED | S1 `/expenses` 목록 + URL 필터 | [apps/web/app/expenses/expense-filter.spec.ts:31](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/expenses/expense-filter.spec.ts:31), [apps/web/tests/visual/expenses-flow.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/expenses-flow.spec.ts:4) | — |
 | CLOSED | — | TESTED | S2 `/expenses/new` 저장 흐름 | [apps/web/app/expenses/expense-form-state.spec.ts:72](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/expenses/expense-form-state.spec.ts:72), [apps/web/tests/visual/expenses-new.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/expenses-new.spec.ts:4) | — |
-| OPEN | LOW | UNTESTED | S3 `/expenses/[id]` view↔edit | [apps/web/tests/visual/expenses-detail.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/expenses-detail.spec.ts:4)는 missing fallback만 캡처한다. loaded detail의 수정 버튼 클릭, 저장, view 복귀 직접 테스트가 없다. | jsdom 또는 API mock 기반 e2e로 detail loaded 상태의 view↔edit 회귀 테스트를 추가한다. |
+| CLOSED | — | TESTED | S3 `/expenses/[id]` view↔edit | [apps/web/app/expenses/[id]/expense-detail-view.spec.tsx:60](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/expenses/[id]/expense-detail-view.spec.tsx:60) jsdom + RTL 로 수정 클릭 → 저장 → view 복귀, 취소 흐름을 직접 검증한다. | — |
 | CLOSED | — | TESTED | S5 `/vault` URL 필터·검색 | [apps/web/app/vault/vault-filter.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/vault/vault-filter.spec.ts:4), [apps/web/tests/visual/vault.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/vault.spec.ts:4) | — |
-| OPEN | LOW | UNTESTED | S7 `/vault/[id]` view↔edit | [apps/web/tests/visual/vault-detail.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/vault-detail.spec.ts:4)는 locked/missing fallback 중심이다. loaded detail의 수정 버튼 클릭, 저장, view 복귀 직접 테스트가 없다. | jsdom 또는 API mock 기반 e2e로 vault detail loaded 상태의 view↔edit 회귀 테스트를 추가한다. |
+| CLOSED | — | TESTED | S7 `/vault/[id]` view↔edit | [apps/web/app/vault/[id]/vault-entry-detail.spec.tsx:64](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/vault/[id]/vault-entry-detail.spec.tsx:64) jsdom + RTL 로 loaded 상태의 수정 클릭 → 저장 → view 복귀, 취소 흐름을 직접 검증한다. | — |
 | CLOSED | — | TESTED | S8 `/vault/categories` reference | [apps/web/tests/visual/vault-categories.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/vault-categories.spec.ts:4) | — |
 | CLOSED | — | TESTED | S9 `/vault/backup` 마운트 | [apps/web/tests/visual/vault-backup.spec.ts:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/vault-backup.spec.ts:4) | — |
 | CLOSED | — | TESTED | S16 `/expenses/잘못된id` 404 | [apps/web/tests/visual/accessibility.spec.ts:9](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/accessibility.spec.ts:9), [apps/web/app/not-found.tsx:4](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/not-found.tsx:4) | — |
@@ -83,7 +83,7 @@
 | CLOSED | — | TESTED | S19 알 수 없는 카테고리 query fallback | [apps/web/app/vault/vault-filter.spec.ts:13](/Users/leejinwoo/Desktop/study/my-vault/apps/web/app/vault/vault-filter.spec.ts:13) | — |
 | CLOSED | — | TESTED | S20 시각 회귀 11페이지 × 3 viewport + axe | [apps/web/tests/visual/accessibility.spec.ts:5](/Users/leejinwoo/Desktop/study/my-vault/apps/web/tests/visual/accessibility.spec.ts:5), `pnpm --filter @life-key/web run test:visual` 69/69 통과 | — |
 
-**미테스트:** 2건.
+**미테스트:** 0건.
 
 ---
 
@@ -111,19 +111,19 @@
 ### 통과
 
 - `pnpm --filter @life-key/web typecheck` → 통과.
-- `pnpm --filter @life-key/web test` → 32/32 통과.
+- `pnpm --filter @life-key/web test` → 36/36 통과(node 프로젝트 32 + jsdom 프로젝트 4).
 - `pnpm --filter @life-key/web build` → 통과. 12개 app route 등록, 최대 First Load JS 133 kB.
-- `pnpm --filter @life-key/web run test:visual` → 69/69 통과. axe 11페이지와 visual screenshot 11페이지 × 3 viewport 모두 통과.
+- `pnpm --filter @life-key/web run test:visual` → 본 회차 미실행. UI/스타일 변경이 없어 직전 회차 69/69 결과를 재사용.
 
 ### 검증 중 발생한 일
 
-- `test:visual`을 `next build`와 병렬로 먼저 실행한 1회는 `.next` production build 부재로 실패했다.
-- `next build` 완료 후 같은 명령을 재실행해 69/69 통과를 확인했다.
+- jest 멀티 프로젝트(node + jsdom)로 분리한 뒤 기존 32건 모두 node 프로젝트에서 통과하고, 신규 jsdom 프로젝트의 detail view↔edit 2개 파일(4 케이스)이 모두 통과했다.
 
 ### 운영 검증 잔여
 
-1. 실제 백엔드 데이터가 있는 상태에서 `/expenses/[id]`, `/vault/[id]`의 loaded detail view↔edit 흐름을 수동 확인한다.
+1. 실제 백엔드 데이터가 있는 상태에서 `/expenses/[id]`, `/vault/[id]`의 loaded detail view↔edit 흐름을 수동 확인한다(자동 테스트는 jsdom + 모킹 기반이므로 실제 axios 호출 경로는 별개).
 2. 잠금 상태에서 `/vault/new`, `/vault/[id]/<임의id>`, `/vault/categories`, `/vault/backup` 직접 진입 시 UnlockScreen fallback을 수동 확인한다.
+3. UI/스타일 변경이 다음 회차에서 발생하면 `pnpm --filter @life-key/web run test:visual`을 재실행해 69/69 baseline 유효성을 재확인한다.
 
 ---
 
@@ -143,6 +143,7 @@
 - 인증 우회 0건.
 - secrets/env 노출 0건.
 - 신규 외부 호출 0건.
+- 신규 devDependencies(`jest-environment-jsdom@^29`, `@testing-library/react`, `@testing-library/dom`)는 표준 OSS 테스트 도구이며 production 번들에 포함되지 않는다.
 
 ### 권장
 

@@ -83,14 +83,13 @@
 
 ## 최근 업데이트
 
-2026-05-17
+2026-05-17 — patch 회차. review.md OPEN 2건(S3/S7 view↔edit UNTESTED) 보강. jest 멀티 프로젝트(node + jsdom)로 전환하고 RTL 기반 회귀 테스트 2개 추가. 36/36 통과.
 
 ## 다음 액션 아이템
 
 | 담당 | 내용 | 기한 |
 |------|------|------|
-| 사용자 | 백엔드 띄우고 `pnpm --filter @life-key/web run test:visual:update` 로 baseline 11개 캡처 | verify 단계 |
-| 사용자 | `/project-verify ui-ux-improve` 실행 | verify 단계 |
+| 사용자 | `/project-verify ui-ux-improve` 재실행 | verify 단계 |
 
 ## 향후 작업 (TODOS 이관)
 
