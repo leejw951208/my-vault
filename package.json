@@ -1,16 +1,21 @@
 {
-  "name": "life-key",
-  "version": "0.1.0",
-  "private": true,
-  "packageManager": "pnpm@11.0.9",
-  "engines": {
-    "node": ">=24"
-  },
-  "scripts": {
-    "dev": "pnpm -r --parallel run dev",
-    "build": "pnpm -r run build",
-    "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typecheck",
-    "test": "pnpm -r run test"
-  }
+    "name": "life-key",
+    "version": "0.1.0",
+    "private": true,
+    "packageManager": "pnpm@11.0.9",
+    "engines": {
+        "node": ">=24"
+    },
+    "scripts": {
+        "dev": "pnpm -r --parallel run dev",
+        "build": "pnpm -r run build",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "lint": "pnpm -r run lint",
+        "typecheck": "pnpm -r run typecheck",
+        "test": "pnpm -r run test"
+    },
+    "devDependencies": {
+        "prettier": "^3.8.3"
+    }
 }

@@ -1,47 +1,53 @@
 // Vault 도메인 공용 타입. 카테고리 enum 과 KDF 파라미터, 에러 코드 상수를 한 곳에 모은다.
 
-export const VAULT_CATEGORIES = ['BANK', 'CARD', 'SECURITIES', 'SHOPPING', 'OTHER'] as const;
-export type VaultCategory = (typeof VAULT_CATEGORIES)[number];
+export const VAULT_CATEGORIES = [
+    "BANK",
+    "CARD",
+    "SECURITIES",
+    "SHOPPING",
+    "OTHER",
+] as const
+export type VaultCategory = (typeof VAULT_CATEGORIES)[number]
 
 export interface KdfParams {
-  version: number;
-  algorithm: 'argon2id';
-  memoryKiB: number;
-  iterations: number;
-  parallelism: number;
-  saltLength: number;
+    version: number
+    algorithm: "argon2id"
+    memoryKiB: number
+    iterations: number
+    parallelism: number
+    saltLength: number
 }
 
 export const KDF_V1: KdfParams = {
-  version: 1,
-  algorithm: 'argon2id',
-  memoryKiB: 65536,
-  iterations: 3,
-  parallelism: 1,
-  saltLength: 16
-};
+    version: 1,
+    algorithm: "argon2id",
+    memoryKiB: 65536,
+    iterations: 3,
+    parallelism: 1,
+    saltLength: 16,
+}
 
-export const VERIFY_PLAINTEXT = 'VAULT_VERIFY';
+export const VERIFY_PLAINTEXT = "VAULT_VERIFY"
 
 export const VAULT_ERRORS = {
-  SETUP_EXISTS: 'SETUP_EXISTS',
-  MASTER_INVALID: 'MASTER_INVALID',
-  VAULT_LOCKED: 'VAULT_LOCKED',
-  VAULT_LOCKING: 'VAULT_LOCKING',
-  CSRF_INVALID: 'CSRF_INVALID',
-  RATE_LIMITED: 'RATE_LIMITED',
-  IMPORT_CORRUPT: 'IMPORT_CORRUPT',
-  VALIDATION_FAILED: 'VALIDATION_FAILED',
-  CATEGORY_LABEL_CONFLICT: 'CATEGORY_LABEL_CONFLICT'
-} as const;
+    SETUP_EXISTS: "SETUP_EXISTS",
+    MASTER_INVALID: "MASTER_INVALID",
+    VAULT_LOCKED: "VAULT_LOCKED",
+    VAULT_LOCKING: "VAULT_LOCKING",
+    CSRF_INVALID: "CSRF_INVALID",
+    RATE_LIMITED: "RATE_LIMITED",
+    IMPORT_CORRUPT: "IMPORT_CORRUPT",
+    VALIDATION_FAILED: "VALIDATION_FAILED",
+    CATEGORY_LABEL_CONFLICT: "CATEGORY_LABEL_CONFLICT",
+} as const
 
-export const EXPORT_MAGIC = 'LIFEKEY-VAULT-EXPORT';
-export const EXPORT_VERSION = 1;
+export const EXPORT_MAGIC = "LIFEKEY-VAULT-EXPORT"
+export const EXPORT_VERSION = 1
 
-export const IDLE_TIMEOUT_MS = 15 * 60 * 1000;
+export const IDLE_TIMEOUT_MS = 15 * 60 * 1000
 // unlock 응답 최소 소요. spec §"보안" 의 타이밍 누설 차단 항목을 실효화한다 (Argon2id 소요와 무관하게 일정).
-export const MIN_UNLOCK_DURATION_MS = 500;
-export const MAX_UNLOCK_FAILURES = 5;
-export const BACKOFF_DURATION_MS = 60 * 1000;
+export const MIN_UNLOCK_DURATION_MS = 500
+export const MAX_UNLOCK_FAILURES = 5
+export const BACKOFF_DURATION_MS = 60 * 1000
 // lock 처리 도중 동시 요청이 isLocking() 을 관찰할 수 있도록 둔 macrotask 윈도우.
-export const LOCK_WINDOW_MS = 100;
+export const LOCK_WINDOW_MS = 100

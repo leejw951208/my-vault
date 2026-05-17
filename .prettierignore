@@ -1,0 +1,12 @@
+node_modules/
+.agents/
+.claude/
+docs/
+apps/api/src/generated/prisma/
+apps/api/data/
+apps/web/.next/
+dist/
+coverage/
+AGENTS.md
+CLAUDE.md
+README.md
